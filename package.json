@@ -1,0 +1,20 @@
+{
+  "name": "otakeBot",
+  "main": "app.js",
+  "keywords": [
+    "telegram",
+    "telegram-bot",
+    "node-js"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "homepage": "https://github.com/ThiRaBrTNK/otakeBot",
+  "author": {
+    "name": "TNK",
+    "url": "http://github.com/ThiRaBrTNK"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.17.0"
+  }
+}
