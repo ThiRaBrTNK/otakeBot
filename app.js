@@ -30,6 +30,10 @@ bot.on('message', function (msg) {
     bot.sendMessage(chatId, "ololo", {caption: "I'm a bot!"});
     // update();
 });
+bot.onText(/\/help (.*)/, function (msg, match) {
+	var fromId = msg.from.id;
+	bot.sendMessage(fromId, 'ЖАЖА ЧОЧО УПЯЧКА');
+});
 
 // function update() {
 // 	console.log(chats);
