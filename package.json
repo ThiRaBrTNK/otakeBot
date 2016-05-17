@@ -7,14 +7,15 @@
     "node-js"
   ],
   "license": "MIT",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/ThiRaBrTNK/otakeBot",
   "author": {
     "name": "TNK",
     "url": "http://github.com/ThiRaBrTNK"
   },
   "dependencies": {
-    "node-telegram-bot-api": "^0.17.0"
+    "cheerio": "^0.20.0",
+    "node-telegram-bot-api": "^0.17.0",
+    "phantomjs": "^2.1.7"
   }
 }

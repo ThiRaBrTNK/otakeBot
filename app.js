@@ -1,17 +1,44 @@
+'use strict';
+var phantom = require('node-phantom');
 var TelegramBot = require('node-telegram-bot-api');
-var token = process.env.TOKEN;
-var bot = new TelegramBot(token, {polling: true});
+var cheerio = require('cheerio');
 
+var token = process.env.TOKEN;
+var ENVIRONMENT = process.env.ENVIRONMENT;
+var options = {
+	webHook: {
+		port: 443,
+		key: __dirname+'/key.pem',
+		cert: __dirname+'/crt.pem'
+	}
+};
+var bot = new TelegramBot(token, options);
 var chats = [];
+var POLLING_INTERVAL = 2000;
+
+bot.setWebHook('http://otakebot.herokuapp.com:443/' + token,
+               ENVIRONMENT === 'local' ? __dirname+'/crt.pem' : null);
 
 bot.on('message', function (msg) {
-	chats.push(msg.chat.id)
-    console.log(msg);
+	var chatId = msg.chat.id;
+	if(chats.indexOf(chatId) < 0){
+		chats.push(chatId);
+	}
     bot.sendMessage(chatId, "ololo", {caption: "I'm a bot!"});
+    // update();
 });
 
-setInterval(function(){
-	chats.forEach(function(){
-		bot.sendMessage(this, "chat id is " + this);
-	});
-}, 5000)
+// function update() {
+// 	console.log(chats);
+// 	request('http://t-9:pr0k0p@patsuchok.t-9.cx/history.php?id=1386', function (error, response, body) {
+// 		if (!error && response.statusCode == 200) {
+// 			$ = cheerio.load(body);
+// 			var result = $('.content h3').filter(function(i, el){
+// 				return $(this).text() === 'Задание';
+// 			}).nextAll('p').text();
+// 			chats.forEach(function(chatId){
+// 				bot.sendMessage(chatId, result);
+// 			});
+// 		}
+// 	});
+// }
