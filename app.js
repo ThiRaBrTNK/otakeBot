@@ -5,10 +5,7 @@ var cheerio = require('cheerio');
 
 var token = process.env.TOKEN;
 var options = {
-	webHook: {
-		port: process.env.PORT,
-		host: process.env.HOST
-	}
+	webHook: true
 };
 var bot = new TelegramBot(token, options);
 var chats = [];
