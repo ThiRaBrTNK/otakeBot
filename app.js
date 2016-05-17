@@ -4,20 +4,16 @@ var TelegramBot = require('node-telegram-bot-api');
 var cheerio = require('cheerio');
 
 var token = process.env.TOKEN;
-var ENVIRONMENT = process.env.ENVIRONMENT;
 var options = {
 	webHook: {
-		port: 443,
-		key: __dirname+'/key.pem',
-		cert: __dirname+'/crt.pem'
+		port: 443
 	}
 };
 var bot = new TelegramBot(token, options);
 var chats = [];
 var POLLING_INTERVAL = 2000;
 
-bot.setWebHook('http://otakebot.herokuapp.com:443/' + token,
-               ENVIRONMENT === 'local' ? __dirname+'/crt.pem' : null);
+bot.setWebHook('http://otakebot.herokuapp.com:443/' + token);
 
 bot.on('message', function (msg) {
 	var chatId = msg.chat.id;
