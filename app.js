@@ -15,8 +15,10 @@ var chats = [];
 var POLLING_INTERVAL = 2000;
 
 bot.setWebHook('http://otakebot.herokuapp.com:443/' + token);
+console.log('running');
 
 bot.on('message', function (msg) {
+	console.log(msg);
 	var chatId = msg.chat.id;
 	if(chats.indexOf(chatId) < 0){
 		chats.push(chatId);
