@@ -7,32 +7,44 @@ var debug = function(info){
 }
 
 var token = process.env.TOKEN;
+var password = process.env.PASSWORD;
 var options = {
 	webHook: {
 		'port': process.env.PORT,
 		'host': process.env.HOST
 	}
 };
-console.log(options);
 var bot = new TelegramBot(token, options);
 var chats = [];
+var settings = {};
 var POLLING_INTERVAL = 2000;
 
-var asd = bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
+bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
 
-
-bot.on('message', function (msg) {
-	console.log(msg);
-	var chatId = msg.chat.id;
-	if(chats.indexOf(chatId) < 0){
-		chats.push(chatId);
+function trustChat(chatID) {
+	if(!chats.includes(chatID)){
+		chats.push(chatID);
 	}
-    bot.sendMessage(chatId, "ololo", {caption: "I'm a bot!"});
     // update();
-});
-bot.onText(/\/help (.*)/, function (msg, match) {
+};
+bot.onText(buildCommandRegExp('help'), function (msg, match) {
 	var fromId = msg.from.id;
-	bot.sendMessage(fromId, 'ЖАЖА ЧОЧО УПЯЧКА');
+	bot.sendMessage(fromId, 'УПЯЧКА!!! Я ИДИОТ, УБЕЙТЕ МЕНЯ КТО-НИБУДЬ!!!1');
+});
+bot.onText(buildCommandRegExp('start', 'multi'), function (msg, match) {
+	var chatID = msg.chat.id;
+	var messageID;
+	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
+		messageID = msg.message_id
+	});
+	bot.onReplyToMessage(chatID, messageID, function(msg){
+		if (msg.text === password) {
+			trustChat(chatID);
+			bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
+		}
+	});
+});
+bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 });
 
 // function update() {
@@ -49,3 +61,16 @@ bot.onText(/\/help (.*)/, function (msg, match) {
 // 		}
 // 	});
 // }
+
+function buildCommandRegExp(command, args) {
+	var argsRegExp = '';
+	if (args) {
+		argsRegExp = ' ';
+		if (args ==='single') {
+			argsRegExp += '(.+)';
+		} else if (args ==='multi') {
+			argsRegExp += '(.*)';
+		}
+	}
+	return new RegExp('\/${command}(?:@otakeBot)${args}')
+}
