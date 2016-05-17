@@ -11,8 +11,8 @@ var bot = new TelegramBot(token, options);
 var chats = [];
 var POLLING_INTERVAL = 2000;
 
-bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
 console.log('running');
+console.log(bot.setWebHook('https://otakebot.herokuapp.com:443/' + token));
 
 bot.on('message', function (msg) {
 	console.log(msg);
