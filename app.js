@@ -12,7 +12,9 @@ var chats = [];
 var POLLING_INTERVAL = 2000;
 
 console.log('running');
-console.log(bot.setWebHook('https://otakebot.herokuapp.com:443/' + token));
+bot.setWebHook('https://otakebot.herokuapp.com:443/' + token).then(function(resp){
+	console.log(resp)
+});
 
 bot.on('message', function (msg) {
 	console.log(msg);
