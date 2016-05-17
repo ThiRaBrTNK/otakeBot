@@ -25,7 +25,6 @@ function trustChat(chatID) {
 	if(!chats.includes(chatID)){
 		chats.push(chatID);
 	}
-    // update();
 };
 bot.onText(buildCommandRegExp('help'), function (msg, match) {
 	var fromId = msg.from.id;
@@ -43,6 +42,10 @@ bot.onText(buildCommandRegExp('start', 'multi'), function (msg, match) {
 			bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
 		}
 	});
+});
+bot.on('message', function (msg) {
+	var chatId = msg.chat.id;
+	bot.sendMessage(chatId, 'dbg: message recieved');
 });
 bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 });
