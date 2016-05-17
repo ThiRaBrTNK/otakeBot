@@ -2,19 +2,24 @@
 var phantom = require('node-phantom');
 var TelegramBot = require('node-telegram-bot-api');
 var cheerio = require('cheerio');
+var debug = function(info){
+	console.log(info);
+}
 
 var token = process.env.TOKEN;
 var options = {
-	webHook: true
+	webHook: {
+		'port': process.env.PORT,
+		'host': process.env.HOST
+	}
 };
+console.log(options);
 var bot = new TelegramBot(token, options);
 var chats = [];
 var POLLING_INTERVAL = 2000;
 
-console.log('running');
-bot.setWebHook('https://otakebot.herokuapp.com:443/' + token).then(function(resp){
-	console.log(resp)
-});
+var asd = bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
+
 
 bot.on('message', function (msg) {
 	console.log(msg);
