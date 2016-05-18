@@ -32,8 +32,8 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	var messageID;
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id
+		console.log(chatID, '  ', messageID)
 	});
-	console.log(chatID, '  ', messageID)
 	bot.onReplyToMessage(chatID, messageID, function(msg){
 		console.log('got reply')
 		if (msg.text === password) {
