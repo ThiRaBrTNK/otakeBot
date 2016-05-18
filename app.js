@@ -31,7 +31,7 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	var chatID = msg.chat.id;
 	var messageID;
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
-		messageID = msg.message_id
+		messageID = msg.message_id;
 		bot.onReplyToMessage(chatID, messageID, function(msg){
 			if (msg.text === password) {
 				trustChat(chatID);
