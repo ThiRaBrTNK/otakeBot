@@ -33,10 +33,16 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id;
 		bot.onReplyToMessage(chatID, messageID, function(msg){
-			console.log(`GOT REPLY ${msg.text},${password},${msg.text===password},${chatID}`);
 			if (msg.text === password) {
 				trustChat(chatID);
-				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
+				console.log(`SENDING REPLY TO ${chatID}`);
+				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1').then(function(msg){
+					console.log(`SENT REPLY TO ${chatID}:`);
+					console.log(msg);
+				}).catch(function(e){
+					console.log(`SEND REPLY TO ${chatID} FAILED:`);
+					console.log(e);
+				});
 			}
 		});
 	});
