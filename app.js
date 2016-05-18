@@ -19,8 +19,12 @@ var POLLING_INTERVAL = 2000;
 bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
 
 function trustChat(chatID) {
+	console.log('TRUSTING STARTED:');
+	console.log(`INCLUDES? ${!chats.includes(chatID)}`);
 	if(!chats.includes(chatID)){
+		console.log(`NO, PUSHING`);
 		chats.push(chatID);
+		console.log(`PUSHED, ${chats}`);
 	}
 };
 bot.onText(buildCommandRegExp('help'), function (msg, match) {
