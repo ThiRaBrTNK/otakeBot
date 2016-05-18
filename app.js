@@ -25,7 +25,7 @@ function trustChat(chatID) {
 	}
 };
 bot.onText(buildCommandRegExp('help'), function (msg, match) {
-	var fromId = msg.from.id;
+	var fromId = msg.chat.id;
 	bot.sendMessage(fromId, 'УПЯЧКА!!! Я ИДИОТ, УБЕЙТЕ МЕНЯ КТО-НИБУДЬ!!!1');
 });
 bot.onText(buildCommandRegExp('start'), function (msg, match) {
