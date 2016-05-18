@@ -14,6 +14,7 @@ var options = {
 		'host': process.env.HOST
 	}
 };
+console.log(buildCommandRegExp('start', 'multi'))
 var bot = new TelegramBot(token, options);
 var chats = [];
 var settings = {};
@@ -75,5 +76,5 @@ function buildCommandRegExp(command, args) {
 			argsRegExp += '(.*)';
 		}
 	}
-	return new RegExp('\/${command}(?:@otakeBot)${args}')
+	return new RegExp(`\/${command}(?:@otakeBot)${args}`)
 }
