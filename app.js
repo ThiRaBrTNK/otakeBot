@@ -35,7 +35,7 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 		messageID = msg.message_id
 	});
 	bot.onReplyToMessage(chatID, messageID, function(msg){
-		bot.sendMessage(chatID, 'answer recieved')
+		console.log('got reply')
 		if (msg.text === password) {
 			trustChat(chatID);
 			bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
