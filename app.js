@@ -2,9 +2,7 @@
 var phantom = require('node-phantom');
 var TelegramBot = require('node-telegram-bot-api');
 var cheerio = require('cheerio');
-var debug = function(info){
-	console.log(info);
-}
+console.log(buildCommandRegExp('start', 'multi'))
 
 var token = process.env.TOKEN;
 var password = process.env.PASSWORD;
@@ -45,7 +43,7 @@ bot.onText(buildCommandRegExp('start', 'multi'), function (msg, match) {
 });
 bot.on('message', function (msg) {
 	var chatId = msg.chat.id;
-	bot.sendMessage(chatId, buildCommandRegExp('start', 'multi'));
+	bot.sendMessage(chatId, 'dbg:' + buildCommandRegExp('start', 'multi'));
 });
 bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 });
