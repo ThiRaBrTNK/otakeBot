@@ -14,7 +14,6 @@ var options = {
 		'host': process.env.HOST
 	}
 };
-console.log(buildCommandRegExp('start', 'multi'))
 var bot = new TelegramBot(token, options);
 var chats = [];
 var settings = {};
@@ -46,7 +45,7 @@ bot.onText(buildCommandRegExp('start', 'multi'), function (msg, match) {
 });
 bot.on('message', function (msg) {
 	var chatId = msg.chat.id;
-	bot.sendMessage(chatId, 'dbg: message recieved');
+	bot.sendMessage(chatId, buildCommandRegExp('start', 'multi'));
 });
 bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 });
