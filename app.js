@@ -33,7 +33,7 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id;
 		bot.onReplyToMessage(chatID, messageID, function(msg){
-			console.log(`GOT REPLY ${msg.text} ${password}`);
+			console.log(`GOT REPLY ${msg.text},${password},${msg.text===password},${chatID}`);
 			if (msg.text === password) {
 				trustChat(chatID);
 				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
