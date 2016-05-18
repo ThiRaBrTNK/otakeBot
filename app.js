@@ -34,6 +34,7 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id
 	});
+	console.log(chatID, '  ', messageID)
 	bot.onReplyToMessage(chatID, messageID, function(msg){
 		console.log('got reply')
 		if (msg.text === password) {
@@ -45,6 +46,7 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 bot.on('message', function (msg) {
 	var chatId = msg.chat.id;
 	// bot.sendMessage(chatId, 'dbg:' + buildCommandRegExp('start', 'multi'));
+	console.log(msg);
 });
 bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 });
