@@ -34,13 +34,13 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id
 	});
-	bot.onReplyToMessage(chatID, messageID, function(msg){
-		bot.sendMessage(chatID, 'answer recieved')
-		if (msg.text === password) {
-			trustChat(chatID);
-			bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
-		}
-	});
+});
+bot.onReplyToMessage(chatID, messageID, function(msg){
+	bot.sendMessage(chatID, 'answer recieved')
+	if (msg.text === password) {
+		trustChat(chatID);
+		bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
+	}
 });
 bot.on('message', function (msg) {
 	var chatId = msg.chat.id;
