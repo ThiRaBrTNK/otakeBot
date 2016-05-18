@@ -19,12 +19,8 @@ var POLLING_INTERVAL = 2000;
 bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
 
 function trustChat(chatID) {
-	console.log('TRUSTING STARTED:');
-	console.log(`INCLUDES? ${!chats.includes(chatID)}`);
-	if(!chats.includes(chatID)){
-		console.log(`NO, PUSHING`);
+	if(chats.indexOf(chatID) < 0){
 		chats.push(chatID);
-		console.log(`PUSHED, ${chats}`);
 	}
 };
 bot.onText(buildCommandRegExp('help'), function (msg, match) {
@@ -37,19 +33,9 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 		messageID = msg.message_id;
 		bot.onReplyToMessage(chatID, messageID, function(msg){
-			console.log(`GOT REPLY ${msg.text}===${password} ${msg.text === password}`);
 			if (msg.text === password) {
-				console.log(`TRUSTING CHAT ${chatID} in ${chats}`);
 				trustChat(chatID);
-				console.log(`TRUSTED CHAT ${chatID} in ${chats}`);
-				console.log(`SENDING REPLY TO ${chatID}`);
-				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1').then(function(msg){
-					console.log(`SENT REPLY TO ${chatID}:`);
-					console.log(msg);
-				}).catch(function(e){
-					console.log(`SEND REPLY TO ${chatID} FAILED:`);
-					console.log(e);
-				});
+				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
 			}
 		});
 	});
