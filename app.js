@@ -38,8 +38,8 @@ bot.onText(buildCommandRegExp('start'), function (msg, match) {
 				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1')
 			}
 		});
-	}).catch(function(){
-		console.log('auth request failed');
+	}).catch(function(e){
+		console.log('auth request failed', e);
 	});
 });
 bot.on('message', function (msg) {
