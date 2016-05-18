@@ -2,7 +2,6 @@
 var phantom = require('node-phantom');
 var TelegramBot = require('node-telegram-bot-api');
 var cheerio = require('cheerio');
-console.log(buildCommandRegExp('start', 'multi'))
 
 var token = process.env.TOKEN;
 var password = process.env.PASSWORD;
