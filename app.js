@@ -28,7 +28,7 @@ bot.onText(buildCommandRegExp('help'), function (msg, match) {
 	var fromId = msg.from.id;
 	bot.sendMessage(fromId, 'УПЯЧКА!!! Я ИДИОТ, УБЕЙТЕ МЕНЯ КТО-НИБУДЬ!!!1');
 });
-bot.onText(buildCommandRegExp('start', 'multi'), function (msg, match) {
+bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	var chatID = msg.chat.id;
 	var messageID;
 	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
@@ -63,14 +63,6 @@ bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 // 	});
 // }
 
-function buildCommandRegExp(command, args) {
-	var argsRegExp = '';
-	if (args) {
-		if (args ==='single') {
-			argsRegExp += ' (.+)';
-		} else if (args ==='multi') {
-			argsRegExp += '(?: ([^ ]+))';
-		}
-	}
-	return new RegExp(`\/${command}(?:@otakeBot)?${argsRegExp}`)
+function buildCommandRegExp(command) {
+	return new RegExp(`\/${command}(?:@otakeBot)?(?: (.+))?`)
 }
