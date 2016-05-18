@@ -66,12 +66,11 @@ bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
 function buildCommandRegExp(command, args) {
 	var argsRegExp = '';
 	if (args) {
-		argsRegExp = ' ';
 		if (args ==='single') {
-			argsRegExp += '(.+)';
+			argsRegExp += ' (.+)';
 		} else if (args ==='multi') {
-			argsRegExp += '(.*)';
+			argsRegExp += '(?: ([^ ]+))';
 		}
 	}
-	return new RegExp(`\/${command}(?:@otakeBot)*${argsRegExp}`)
+	return new RegExp(`\/${command}(?:@otakeBot)?${argsRegExp}`)
 }
