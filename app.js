@@ -76,5 +76,5 @@ function buildCommandRegExp(command, args) {
 			argsRegExp += '(.*)';
 		}
 	}
-	return new RegExp(`\/${command}(?:@otakeBot)${args}`)
+	return new RegExp(`\/${command}(?:@otakeBot)*${args}`)
 }
