@@ -60,6 +60,7 @@ bot.onText(buildCommandRegExp('help'), function (msg, match) {
 });
 
 bot.onText(buildCommandRegExp('start'), function (msg, match) {
+	bot.sendMessage(chatID, 'ЛОЛ');
 	var chatID = msg.chat.id;
 	var messageID;
 	console.log(`CHAT TYPE: ${chat.type}`);
