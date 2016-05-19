@@ -60,11 +60,10 @@ bot.onText(buildCommandRegExp('help'), function (msg, match) {
 });
 
 bot.onText(buildCommandRegExp('start'), function (msg, match) {
-	bot.sendMessage(msg.chat.id, chat.toString());
 	var chatID = msg.chat.id;
 	var messageID;
-	console.log(`CHAT TYPE: ${chat.type}`);
-	if (chat.type === 'private') {
+	console.log(`CHAT TYPE: ${msg.chat.type}`);
+	if (msg.chat.type === 'private') {
 		console.log(`SENDING AUTH REQUEST TO ${chatID}`);
 		bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
 			console.log(`SENT AUTH REQUEST TO ${chatID}`);
