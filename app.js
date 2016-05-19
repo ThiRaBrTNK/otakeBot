@@ -2,9 +2,12 @@
 var phantom = require('node-phantom');
 var TelegramBot = require('node-telegram-bot-api');
 var cheerio = require('cheerio');
+var masterAdmin;
+var admins = [];
 
 var token = process.env.TOKEN;
-var password = process.env.PASSWORD;
+var masterPassword = process.env.PASSWORD;
+var password;
 var options = {
 	webHook: {
 		'port': process.env.PORT,
@@ -12,40 +15,109 @@ var options = {
 	}
 };
 var bot = new TelegramBot(token, options);
-var chats = [];
+var trustedChats = [];
 var settings = {};
-var POLLING_INTERVAL = 2000;
+var POLLING_INTERVAL = 2 * 1000;
+var SESSION_TIMEOUT = 48 * 60 * 60 * 1000;
 
 bot.setWebHook('https://otakebot.herokuapp.com:443/' + token);
 
 function trustChat(chatID) {
-	if(chats.indexOf(chatID) < 0){
-		chats.push(chatID);
+	if(!isChatTrusted(chatID)){
+		trustedChats.push(chatID);
 	}
-};
+}
+
+function isChatTrusted(chatID) {
+	return trustedChats.indexOf(chatID) >= 0;
+}
+
+function isAdmin(userID) {
+	return admins.indexOf(userID) >= 0;
+}
+
+function addAdmin(userID) {
+	if (!isAdmin(userID)) {
+		admins.push(userID);
+	}
+}
+
 bot.onText(buildCommandRegExp('help'), function (msg, match) {
 	var fromId = msg.chat.id;
-	bot.sendMessage(fromId, 'УПЯЧКА!!! Я ИДИОТ, УБЕЙТЕ МЕНЯ КТО-НИБУДЬ!!!1');
+	bot.sendMessage(fromId, `УПЯЧКА!!! Я ИДИОТ, УБЕЙТЕ МЕНЯ КТО-НИБУДЬ!!!1
+		*commands* — description:
+		*/start* — start interaction with otakeBot
+		*/help* — get this help message
+		*/settings* — see your privileges
+		*/requestAdminPrivileges* — ask master admin for admin privileges
+		*/renounceAdminPrivileges* — give up on your admin privileges
+		*/grantAdminPrivileges @username* — grant user admin privileges _for master admin only_
+		*/revokeAdminPrivileges @username* — revoke admin privileges from user _for master admin only_
+		*/setPassword password* — set password, required for getting admin privileges without requesting/granting _for master admin only_`,
+	{
+		'parse_mode': 'markdown'
+	});
 });
+
 bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	var chatID = msg.chat.id;
 	var messageID;
-	bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
-		messageID = msg.message_id;
-		bot.onReplyToMessage(chatID, messageID, function(msg){
-			if (msg.text === password) {
-				trustChat(chatID);
-				bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
-			}
+	if (chat.type === 'private') {
+		bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
+			messageID = msg.message_id;
+			bot.onReplyToMessage(chatID, messageID, function(msg){
+				if (msg.text === masterPassword && !masterAdmin) {
+					masterAdmin = msg.from.id;
+					bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
+				} else if (password && msg.text === password) {
+					addAdmin(msg.from.id);
+					bot.sendMessage(chatID, 'ЩАЧЛО ПОПЯЧТСА');
+				}
+			});
 		});
-	});
+	} else {
+
+	}
 });
+
 bot.on('message', function (msg) {
-	var chatId = msg.chat.id;
-	// bot.sendMessage(chatId, 'dbg:' + buildCommandRegExp('start', 'multi'));
 	console.log(msg);
 });
-bot.onText(buildCommandRegExp('settings', 'multi'), function (msg, match) {
+
+bot.onText(buildCommandRegExp('settings'), function (msg, match) {
+	if (msg.from.id === masterAdmin) {
+		bot.sendMessage(msg.from.id, 'You have master admin privileges.');
+	} else if (isChatTrusted(msg.from.id)) {
+		bot.sendMessage(msg.from.id, 'You have admin privileges. Use /renounceAdminPrivileges');
+	} else {
+		bot.sendMessage(msg.from.id, 'You don\'t have admin privileges. Use /requestAdminPrivileges to get ones.');
+	}
+});
+
+bot.onText(buildCommandRegExp('setPassword'), function (msg, match) {
+	if (msg.from.id !== masterAdmin) {
+		return;
+	}
+	console.log(typeof match);
+	password = match;
+});
+
+bot.onText(buildCommandRegExp('requestAdminPrivileges'), function (msg, match) {
+	var name = msg.from.first_name;
+	name += msg.from.username ? ' ' + msg.from.username : '';
+	name += msg.from.last_name ? ' ' + msg.from.last_name : '';
+	if (masterAdmin) {
+		bot.sendMessage(masterAdmin,
+		                `User ${name} asks for admin privileges. Grant?`, {
+			'reply_markup': [
+				['Grant'],
+				['Do not grant']
+			]
+		});
+	} else {
+		bot.sendMessage(msg.from.id,
+		                'There is no master admin to grant you privileges.');
+	}
 });
 
 // function update() {
