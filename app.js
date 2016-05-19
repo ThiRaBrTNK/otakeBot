@@ -95,6 +95,7 @@ bot.onText(buildCommandRegExp('settings'), function (msg, match) {
 });
 
 bot.onText(buildCommandRegExp('setPassword'), function (msg, match) {
+	console.log(match)
 	if (msg.from.id !== masterAdmin) {
 		bot.sendMessage(msg.chat.id, 'You don\'t have privileges to do that.');
 		return;
