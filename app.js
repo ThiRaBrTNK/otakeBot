@@ -117,6 +117,10 @@ bot.onText(buildCommandRegExp('setPassword'), function (msg, match) {
 });
 
 bot.onText(buildCommandRegExp('requestAdminPrivileges'), function (msg, match) {
+	if (msg.chat.type !== 'group') {
+		bot.sendMessage(msg.chat.id, 'Please, request from group conversation.')
+		return;
+	}
 	var name = msg.from.first_name;
 	name += msg.from.username ? ' ' + msg.from.username : '';
 	name += msg.from.last_name ? ' ' + msg.from.last_name : '';
