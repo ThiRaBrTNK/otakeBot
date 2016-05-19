@@ -62,15 +62,10 @@ bot.onText(buildCommandRegExp('help'), function (msg, match) {
 bot.onText(buildCommandRegExp('start'), function (msg, match) {
 	var chatID = msg.chat.id;
 	var messageID;
-	console.log(`CHAT TYPE: ${msg.chat.type}`);
 	if (msg.chat.type === 'private') {
-		console.log(`SENDING AUTH REQUEST TO ${chatID}`);
 		bot.sendMessage(chatID, 'ОЛОЛО').then(function(msg){
-			console.log(`SENT AUTH REQUEST TO ${chatID}`);
 			messageID = msg.message_id;
-			console.log(`SETTING AUTH REPLY HANDLER: ${chatID}, ${messageID}`);
 			bot.onReplyToMessage(chatID, messageID, function(msg){
-				console.log(`GOT AUTH REPLY FROM ${msg.chat.id}`);
 				if (msg.text === masterPassword && !masterAdmin) {
 					masterAdmin = msg.from.id;
 					bot.sendMessage(chatID, 'ЖЕПЬ ЕБРИЛО!!1');
