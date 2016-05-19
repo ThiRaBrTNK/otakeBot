@@ -96,10 +96,24 @@ bot.onText(buildCommandRegExp('settings'), function (msg, match) {
 
 bot.onText(buildCommandRegExp('setPassword'), function (msg, match) {
 	if (msg.from.id !== masterAdmin) {
+		bot.sendMessage(msg.chat.id, 'You don\'t have privileges to do that.');
 		return;
 	}
-	console.log(typeof match);
-	password = match;
+	if (match && match.length) {
+		password = match;
+		bot.sendMessage(msg.chat.id, 'Password set successfully.');
+	} else {
+		var messageID;
+		bot.sendMessage(msg.chat.id,
+		                'Please, provide a password in reply to this message.')
+		.then(function(msg){
+			messageID = msg.message_id;
+		});
+		bot.onReplyToMessage(msg.chat.id, messageID, function(msg) {
+			password = msg.text;
+			bot.sendMessage(msg.chat.id, 'Password set successfully.');
+		});
+	}
 });
 
 bot.onText(buildCommandRegExp('requestAdminPrivileges'), function (msg, match) {
