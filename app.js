@@ -86,11 +86,11 @@ bot.on('message', function (msg) {
 
 bot.onText(buildCommandRegExp('settings'), function (msg, match) {
 	if (msg.from.id === masterAdmin) {
-		bot.sendMessage(msg.from.id, 'You have master admin privileges.');
+		bot.sendMessage(msg.chat.id, 'You have master admin privileges.');
 	} else if (isChatTrusted(msg.from.id)) {
-		bot.sendMessage(msg.from.id, 'You have admin privileges. Use /renounceAdminPrivileges');
+		bot.sendMessage(msg.chat.id, 'You have admin privileges. Use /renounceAdminPrivileges');
 	} else {
-		bot.sendMessage(msg.from.id, 'You don\'t have admin privileges. Use /requestAdminPrivileges to get ones.');
+		bot.sendMessage(msg.chat.id, 'You don\'t have admin privileges. Use /requestAdminPrivileges to get ones.');
 	}
 });
 
@@ -115,7 +115,7 @@ bot.onText(buildCommandRegExp('requestAdminPrivileges'), function (msg, match) {
 			]
 		});
 	} else {
-		bot.sendMessage(msg.from.id,
+		bot.sendMessage(msg.chat.id,
 		                'There is no master admin to grant you privileges.');
 	}
 });
