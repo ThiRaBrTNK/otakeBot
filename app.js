@@ -95,13 +95,12 @@ bot.onText(buildCommandRegExp('settings'), function (msg, match) {
 });
 
 bot.onText(buildCommandRegExp('setPassword'), function (msg, match) {
-	console.log(match)
 	if (msg.from.id !== masterAdmin) {
 		bot.sendMessage(msg.chat.id, 'You don\'t have privileges to do that.');
 		return;
 	}
-	if (match && match.length) {
-		password = match;
+	if (match[1]) {
+		password = match[1];
 		bot.sendMessage(msg.chat.id, 'Password set successfully.');
 	} else {
 		var messageID;
